@@ -2,18 +2,36 @@ package com.example.ucproomdatabase.ui.viewmodel.barang
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.ucproomdatabase.data.entity.Barang
 import com.example.ucproomdatabase.repository.RepositoryBrg
+import kotlinx.coroutines.launch
 
 class BarangViewModel(private val repositoryBrg: RepositoryBrg) : ViewModel() {
-    val uiState by mutableStateOf(BrgUiState())
+    var uiState by mutableStateOf(BrgUiState())
 
     fun updateUiState(barangEvent: BarangEvent){
         uiState = uiState.copy(
             barangEvent = barangEvent
         )
     }
+
+    private fun validateFields(): Boolean{
+        val event = uiState.barangEvent
+        val errorState = FormErrorState(
+            idbarang = if (event.idbarang.isBlank()) "Id barang tidak boleh kosong" else null,
+            namabarang = if (event.namabarang.isBlank()) "Nama barang tidak boleh kosong" else null,
+            deskripsi = if (event.deskripsi.isBlank()) "Deskripsi barang tidak boleh kosong" else null,
+            harga = if (event.harga == 0.0) "Harga barang tidak boleh kosong" else null,
+            stok = if (event.stok == 0) "Stok barang tidak boleh kosong" else null,
+            namasuplier = if (event.namasuplier.isBlank()) "Nama suplier tidak boleh kosong" else null
+        )
+        uiState = uiState.copy(isEntryValid = errorState)
+        return errorState.isValid()
+    }
+
 }
 
 data class BrgUiState(
@@ -26,8 +44,8 @@ data class FormErrorState(
     val idbarang: String? = null,
     val namabarang: String? = null,
     val deskripsi: String? = null,
-    val harga: Double? = null,
-    val stok: Int? = null,
+    val harga: String? = null,
+    val stok: String? = null,
     val namasuplier: String? = null
 ){
     fun isValid(): Boolean{
