@@ -2,6 +2,12 @@ package com.example.ucproomdatabase.ui.viewmodel.barang
 
 import com.example.ucproomdatabase.data.entity.Barang
 
+data class BrgUiState(
+    val barangEvent: BarangEvent = BarangEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+    val snackbarMessage: String? = null
+)
+
 data class FormErrorState(
     val idbarang: String? = null,
     val namabarang: String? = null,
