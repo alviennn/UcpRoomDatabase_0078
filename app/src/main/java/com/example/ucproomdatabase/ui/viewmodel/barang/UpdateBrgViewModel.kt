@@ -17,7 +17,18 @@ class updateBrgViewModel(
     private val repositoryBrg: RepositoryBrg,
 ) : ViewModel() {
 
+    var updateBrgUiState by mutableStateOf(BrgUiState())
+        private set
+    private val _barangId: String = checkNotNull(savedStateHandle[DestinasiUpdate.idBarang])
 
+    init {
+        viewModelScope.launch {
+            updateBrgUiState = repositoryBrg.getBarang(_barangId)
+                .filterNotNull()
+                .first()
+                .toUIStateBrg()
+        }
+    }
 }
 
 fun Barang.toUIStateBrg() : BrgUiState = BrgUiState(
