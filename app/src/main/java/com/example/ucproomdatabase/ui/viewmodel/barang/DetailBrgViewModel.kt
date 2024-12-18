@@ -16,5 +16,6 @@ fun Barang.toDetailUiEvent () : BarangEvent{
         deskripsi = deskripsi,
         harga = harga,
         stok = stok,
+        namasuplier = namasuplier
     )
 }
