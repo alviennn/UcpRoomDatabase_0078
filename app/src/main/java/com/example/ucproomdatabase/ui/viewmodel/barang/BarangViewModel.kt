@@ -1,6 +1,20 @@
 package com.example.ucproomdatabase.ui.viewmodel.barang
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import com.example.ucproomdatabase.data.entity.Barang
+import com.example.ucproomdatabase.repository.RepositoryBrg
+
+class BarangViewModel(private val repositoryBrg: RepositoryBrg) : ViewModel() {
+    val uiState by mutableStateOf(BrgUiState())
+
+    fun updateUiState(barangEvent: BarangEvent){
+        uiState = uiState.copy(
+            barangEvent = barangEvent
+        )
+    }
+}
 
 data class BrgUiState(
     val barangEvent: BarangEvent = BarangEvent(),
