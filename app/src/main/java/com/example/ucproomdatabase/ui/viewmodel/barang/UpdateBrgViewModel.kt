@@ -49,6 +49,36 @@ class updateBrgViewModel(
         updateBrgUiState = updateBrgUiState.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
+    fun updateData(){
+        val currentEvent = updateBrgUiState.barangEvent
+
+        if (validateFields()){
+            viewModelScope.launch {
+                try {
+                    repositoryBrg.updateBarang(currentEvent.toBarangEntity())
+                    updateBrgUiState = updateBrgUiState.copy(
+                        snackbarMessage = "Data Berhasil Diupdate",
+                        barangEvent = BarangEvent(),
+                        isEntryValid = FormErrorState()
+                    )
+                    println("SnackBarMessageDiatur: ${updateBrgUiState.snackbarMessage}")
+                } catch (e: Exception){
+                    updateBrgUiState = updateBrgUiState.copy(
+                        snackbarMessage = "Data Gagal Diupdate"
+                    )
+                }
+            }
+        }else {
+            updateBrgUiState = updateBrgUiState.copy(
+                snackbarMessage = "Data gagal Diupdate"
+            )
+        }
+    }
+    fun resetSnackbarMessage(){
+        updateBrgUiState = updateBrgUiState.copy(
+            snackbarMessage = null
+        )
+    }
 }
 
 fun Barang.toUIStateBrg() : BrgUiState = BrgUiState(
