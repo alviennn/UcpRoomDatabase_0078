@@ -2,7 +2,19 @@ package com.example.ucproomdatabase.ui.viewmodel.barang
 
 import com.example.ucproomdatabase.data.entity.Barang
 
-
+data class FormErrorState(
+    val idbarang: String? = null,
+    val namabarang: String? = null,
+    val deskripsi: String? = null,
+    val harga: Double? = null,
+    val stok: Int? = null,
+    val namasuplier: String? = null
+){
+    fun isValid(): Boolean{
+        return idbarang != null && namabarang != null && deskripsi != null &&
+                harga != null && stok != null && namasuplier != null
+    }
+}
 
 data class BarangEvent(
     val idbarang: String = "",
