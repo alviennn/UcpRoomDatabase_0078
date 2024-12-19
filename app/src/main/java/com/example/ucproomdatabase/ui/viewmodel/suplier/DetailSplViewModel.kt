@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 
-class DetailSupViewModel(
+class DetailSplViewModel(
     savedStateHandle: SavedStateHandle,
     private val repositorySup: RepositorySpl,
 ) : ViewModel() {
