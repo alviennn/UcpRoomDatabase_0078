@@ -19,6 +19,6 @@ class LocalRepositoryBrg(
     override fun getAllBarang(): Flow<List<Barang>> =
         barangDao.getAllBarang()
 
-    override fun getBarang(id: Int): Flow<Barang> =
+    override fun getBarang(id: String): Flow<Barang> =
         barangDao.getBarang(id)
 }
