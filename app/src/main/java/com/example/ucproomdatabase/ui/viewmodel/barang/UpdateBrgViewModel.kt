@@ -19,7 +19,7 @@ class updateBrgViewModel(
 
     var updateBrgUiState by mutableStateOf(BrgUiState())
         private set
-    private val _barangId: String = checkNotNull(savedStateHandle[DestinasiUpdate.idBarang])
+    private val _barangId: String = checkNotNull(savedStateHandle[DestinasiUpdate.IdBarang])
 
     init {
         viewModelScope.launch {
