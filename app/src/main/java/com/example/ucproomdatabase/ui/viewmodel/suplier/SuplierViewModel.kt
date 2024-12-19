@@ -2,6 +2,12 @@ package com.example.ucproomdatabase.ui.viewmodel.suplier
 
 import com.example.ucproomdatabase.data.entity.Suplier
 
+data class SuplierUiState(
+    val suplierEvent: SuplierEvent = SuplierEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+    val snackbarMessage: String? = null
+)
+
 data class FormErrorState(
     val idsuplier: String? = null,
     val namasuplier: String? = null,
