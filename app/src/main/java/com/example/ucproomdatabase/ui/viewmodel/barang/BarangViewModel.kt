@@ -10,53 +10,53 @@ import com.example.ucproomdatabase.repository.RepositoryBrg
 import kotlinx.coroutines.launch
 
 class BarangViewModel(private val repositoryBrg: RepositoryBrg) : ViewModel() {
-    var uiState by mutableStateOf(BrgUiState())
+    var BrgUiState by mutableStateOf(BrgUiState())
 
-    fun updateUiState(barangEvent: BarangEvent){
-        uiState = uiState.copy(
+    fun updateUiState(barangEvent: BarangEvent) {
+        BrgUiState = BrgUiState.copy(
             barangEvent = barangEvent
         )
     }
 
-    private fun validateFields(): Boolean{
-        val event = uiState.barangEvent
-        val errorState = FormErrorState(
-            idbarang = if (event.idbarang.isNotEmpty()) "Id barang tidak boleh kosong" else null,
-            namabarang = if (event.namabarang.isNotEmpty()) "Nama barang tidak boleh kosong" else null,
-            deskripsi = if (event.deskripsi.isNotEmpty()) "Deskripsi barang tidak boleh kosong" else null,
-            harga = if (event.harga == 0.0) "Harga barang tidak boleh kosong" else null,
-            stok = if (event.stok == 0) "Stok barang tidak boleh kosong" else null,
-            namasuplier = if (event.namasuplier.isNotEmpty()) "Nama suplier tidak boleh kosong" else null
+    private fun validateFields(): Boolean {
+        val event = BrgUiState.barangEvent
+        val errorState = FormBrgErrorState(
+            idbarang = if (event.idbarang.isEmpty()) "Id barang tidak boleh kosong" else null,
+            namabarang = if (event.namabarang.isEmpty()) "Nama barang tidak boleh kosong" else null,
+            deskripsi = if (event.deskripsi.isEmpty()) "Deskripsi barang tidak boleh kosong" else null,
+            harga = if (event.harga <= 0) "Harga barang tidak boleh kosong atau negatif" else null,
+            stok = if (event.stok <= 0) "Stok barang tidak boleh kosong atau negatif" else null,
+            namasuplier = if (event.namasuplier.isEmpty()) "Nama suplier tidak boleh kosong" else null
         )
-        uiState = uiState.copy(isEntryValid = errorState)
+        BrgUiState = BrgUiState.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
     fun saveData(){
-        val currentEvent = uiState.barangEvent
+        val currentEvent = BrgUiState.barangEvent
 
         if (validateFields()){
             viewModelScope.launch {
                 try {
                     repositoryBrg.insertBarang(currentEvent.toBarangEntity())
-                    uiState = uiState.copy(
+                    BrgUiState = BrgUiState.copy(
                         snackbarMessage = "Data Berhasil Disimpan",
                         barangEvent = BarangEvent(),
-                        isEntryValid = FormErrorState()
+                        isEntryValid = FormBrgErrorState()
                     )
                 }catch (e: Exception){
-                    uiState = uiState.copy(
+                    BrgUiState = BrgUiState.copy(
                         snackbarMessage = "Data Gagal Disimpan"
                     )
                 }
             }
         }else{
-            uiState = uiState.copy(
+            BrgUiState = BrgUiState.copy(
                 snackbarMessage = "Input tidak valid. Periksa kembali data Anda"
             )
         }
     }
     fun resetSnackbarMessage(){
-        uiState = uiState.copy(
+        BrgUiState = BrgUiState.copy(
             snackbarMessage = null
         )
     }
@@ -64,11 +64,11 @@ class BarangViewModel(private val repositoryBrg: RepositoryBrg) : ViewModel() {
 
 data class BrgUiState(
     val barangEvent: BarangEvent = BarangEvent(),
-    val isEntryValid: FormErrorState = FormErrorState(),
+    val isEntryValid: FormBrgErrorState = FormBrgErrorState(),
     val snackbarMessage: String? = null
 )
 
-data class FormErrorState(
+data class FormBrgErrorState(
     val idbarang: String? = null,
     val namabarang: String? = null,
     val deskripsi: String? = null,
@@ -76,9 +76,9 @@ data class FormErrorState(
     val stok: String? = null,
     val namasuplier: String? = null
 ){
-    fun isValid(): Boolean{
-        return idbarang != null && namabarang != null && deskripsi != null &&
-                harga != null && stok != null && namasuplier != null
+    fun isValid(): Boolean {
+        return idbarang == null && namabarang == null && deskripsi == null &&
+                harga == null && stok == null && namasuplier == null
     }
 }
 
@@ -86,7 +86,7 @@ data class BarangEvent(
     val idbarang: String = "",
     val namabarang: String = "",
     val deskripsi: String = "",
-    val harga: Double = 0.0,
+    val harga: Int = 0,
     val stok: Int = 0,
     val namasuplier: String = ""
 )
