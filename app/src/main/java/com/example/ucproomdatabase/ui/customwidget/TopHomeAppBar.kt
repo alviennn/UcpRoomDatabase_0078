@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,15 +39,16 @@ fun TopHomeAppBar(
                         Color(0xFF21CBF3)
                     )
                 ),
-                shape = RoundedCornerShape(bottomEnd = 40.dp)
+                shape = RoundedCornerShape(bottomEnd = 60.dp)
             )
-            .padding(horizontal = 30.dp, vertical = 26.dp)
+            .padding(horizontal = 22.dp, vertical = 26.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+
             if (showBackButton) {
                 IconButton(
                     onClick = onBack,
@@ -54,6 +56,7 @@ fun TopHomeAppBar(
                         .size(40.dp)
                         .clip(CircleShape)
                         .background(Color.White.copy(alpha = 0.15f))
+                        .padding(4.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -66,20 +69,19 @@ fun TopHomeAppBar(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(top = 20.dp)
-                    .padding(start = 16.dp)
+                    .padding(6.dp)
             ) {
                 Text(
                     text = "Lapor Barang",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                    fontSize = 26.sp,
                 )
                 Text(
                     text = "Toko Madura",
                     color = Color.White.copy(alpha = 0.7f),
                     fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
             }
 
@@ -88,7 +90,7 @@ fun TopHomeAppBar(
                     painter = painterResource(id = imageResource),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .size(70.dp)
+                        .size(80.dp)
                         .clip(CircleShape)
                         .background(Color.White.copy(alpha = 0.15f))
                 )

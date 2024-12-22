@@ -2,14 +2,19 @@ package com.example.ucproomdatabase.ui.customwidget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.ucproomdatabase.R
 
 @Composable
 fun TopAppBar(
@@ -17,42 +22,50 @@ fun TopAppBar(
     showBackButton: Boolean = true,
     judul: String,
 ) {
-    val blueText = Color(0xFF1E88E5) // Custom blue color
-
+    val backgroundColor = Color(0xFF1976D2)
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        contentAlignment = Alignment.Center
+            .height(100.dp)
+            .background(backgroundColor)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
         if (showBackButton) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier.align(Alignment.CenterStart).padding(top = 40.dp)
             ) {
-                TextButton(
-                    onClick = onBack,
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = blueText // Set blue color for the back button text
-                    )
-                ) {
-                    Text(
-                        text = "Kembali",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = blueText // Set blue color for the back button text
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Kembali",
+                    tint = Color.White
+                )
             }
         }
+
         Text(
             text = judul,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = blueText,
-            modifier = Modifier.align(Alignment.Center)
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Center).padding(top = 40.dp)
         )
+
+        Box(
+            modifier = Modifier
+                .padding(top = 23.dp)
+                .padding(5.dp)
+                .size(50.dp)
+                .background(color = Color.White, shape = CircleShape)
+                .align(Alignment.CenterEnd),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo",
+                tint = Color.Unspecified,
+                modifier = Modifier.size(32.dp)
+            )
+        }
     }
 }
-
