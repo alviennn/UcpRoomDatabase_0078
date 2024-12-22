@@ -16,12 +16,11 @@ import kotlinx.coroutines.flow.stateIn
 class HomeBrgViewModel(
     private val repositoryBrg: RepositoryBrg
 ) : ViewModel() {
-
-    val homeBrgUiState: StateFlow<HomeBrgUiState> = repositoryBrg.getAllBarang()
+    val HomeBrgUiState: StateFlow<HomeBrgUiState> = repositoryBrg.getAllBarang()
         .filterNotNull()
         .map {
             HomeBrgUiState(
-                barangList = it.toList(),
+                listBrg = it.toList(),
                 isLoading = false,
             )
         }
@@ -41,16 +40,14 @@ class HomeBrgViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = HomeBrgUiState(
-                isLoading = true
-            )
-
+            initialValue = HomeBrgUiState()
         )
+
 }
 
-data class HomeBrgUiState(
-    val barangList: List<Barang> = listOf(),
+data class HomeBrgUiState (
+    val listBrg: List<Barang> = listOf(),
     val isLoading: Boolean = false,
-    val isError : Boolean = false,
+    val isError: Boolean = false,
     val errorMessage: String = ""
 )
