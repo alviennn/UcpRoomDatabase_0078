@@ -52,12 +52,10 @@ fun AddSplView(
 
     Scaffold(
         Modifier, snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
+    ) { it
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
         ) {
             TopAppBar(
                 onBack = onBack,
@@ -91,7 +89,7 @@ fun InsertBodySpl(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         FormSuplier(
-            suplierEvent = uiState.suplierEvent, // Use currentSuplierEvent
+            suplierEvent = uiState.suplierEvent,
             onValueChange = onValueChange,
             errorState = uiState.isEntryValid,
             modifier = Modifier.fillMaxWidth()
@@ -99,7 +97,8 @@ fun InsertBodySpl(
         Button(
             onClick = onClick,
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(16.dp),
         ) {
             Text(text = "Simpan")
         }
@@ -114,7 +113,7 @@ fun FormSuplier(
     modifier: Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth().padding(top = 20.dp).padding(15.dp)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
