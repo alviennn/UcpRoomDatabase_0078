@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ucproomdatabase.data.entity.Barang
 import com.example.ucproomdatabase.repository.RepositoryBrg
+import com.example.ucproomdatabase.ui.navigation.DestinasiDetailBrg
+import com.example.ucproomdatabase.ui.navigation.DestinasiDetailBrg.idBarang
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,7 @@ class DetailBrgViewModel(
     savedStateHandle: SavedStateHandle,
     private val repositoryBrg: RepositoryBrg,
 ) : ViewModel() {
-    private val barangId: Int = checkNotNull(savedStateHandle[DestinasiDetail.idBarang])
+    private val barangId: String = checkNotNull(savedStateHandle[DestinasiDetailBrg.idBarang])
 
     val detailBrgUiState: StateFlow<DetailBrgUiState> = repositoryBrg.getBarang(barangId)
         .filterNotNull()
@@ -31,14 +33,14 @@ class DetailBrgViewModel(
         }
         .onStart {
             emit(DetailBrgUiState(isLoading = true))
-            delay(900)
+            delay(600)
         }
         .catch {
             emit(
                 DetailBrgUiState(
                     isLoading = false,
                     isError = true,
-                    errorMessage = it.message ?: "Terjadi Kesalahan"
+                    errorMessage = it.message ?: "Terjadi Kesalahan",
                 )
             )
         }
@@ -47,7 +49,7 @@ class DetailBrgViewModel(
             started = SharingStarted.WhileSubscribed(2000),
             initialValue = DetailBrgUiState(
                 isLoading = true
-            )
+            ),
         )
     fun deleteBrg(){
         detailBrgUiState.value.detailBrgUiEvent.toBarangEntity().let {
@@ -63,7 +65,13 @@ data class DetailBrgUiState(
     val isLoading: Boolean = false,
     val isError : Boolean = false,
     val errorMessage: String = ""
-)
+){
+    val isUiEventEmpty : Boolean
+        get() = detailBrgUiEvent == BarangEvent()
+
+    val isUiEventNotEmpty : Boolean
+        get() = detailBrgUiEvent != BarangEvent()
+}
 
 fun Barang.toDetailUiEvent () : BarangEvent{
     return BarangEvent(
