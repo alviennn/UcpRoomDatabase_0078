@@ -15,17 +15,17 @@ import kotlinx.coroutines.flow.stateIn
 
 class HomeSplViewModel(
     private val repositorySpl: RepositorySpl
-) : ViewModel(){
+) : ViewModel() {
 
-    val homeSplUiState: StateFlow<HomeSplUiState> = repositorySpl.getAllSuplier()
+    val HomeSplUiState: StateFlow<HomeSplUiState> = repositorySpl.getAllSuplier()
         .filterNotNull()
         .map {
             HomeSplUiState(
-                listSuplier = it.toList(),
+                listSpl = it.toList(),
                 isLoading = false,
             )
         }
-        . onStart {
+        .onStart {
             emit(HomeSplUiState(isLoading = true))
             delay(900)
         }
@@ -48,8 +48,8 @@ class HomeSplViewModel(
 }
 
 data class HomeSplUiState(
-    val listSuplier: List<Suplier> = listOf(),
+    val listSpl: List<Suplier> = listOf(),
     val isLoading: Boolean = false,
-    val isError : Boolean = false,
+    val isError: Boolean = false,
     val errorMessage: String = ""
 )
