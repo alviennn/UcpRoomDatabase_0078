@@ -1,7 +1,5 @@
 package com.example.ucproomdatabase.ui.navigation
 
-import com.example.ucproomdatabase.ui.navigation.DestinasiDetail.idBarang
-
 interface AlamatNavigasi{
     val route: String
 }
@@ -9,17 +7,37 @@ interface AlamatNavigasi{
 object DestinasiHome : AlamatNavigasi {
     override val route = "home"
 }
-object DestinasiInsert: AlamatNavigasi {
-    override val route = "insert"
+
+object DestinasiHomeSpl: AlamatNavigasi {
+    override val route = "homesuplier"
 }
-object DestinasiDetail: AlamatNavigasi {
+
+object DestinasiHomeBrg: AlamatNavigasi {
+    override val route = "homebarang"
+}
+
+object DestinasiInsertSpl: AlamatNavigasi {
+    override val route = "suplier"
+}
+
+object DestinasiInsertBrg: AlamatNavigasi {
+    override val route = "barang"
+}
+
+object DestinasiDetailSpl: AlamatNavigasi {
     override val route = "detail"
     const val idSuplier = "idSuplier"
-    const val idBarang = "idBarang"
-    val routeWithArg = "$route/{$idSuplier}/{$idBarang}"
+    val routeWithArg = "$route/{$idSuplier}"
 }
+
+object DestinasiDetailBrg: AlamatNavigasi {
+    override val route = "detail"
+    const val idBarang = "idBarang"
+    val routeWithArg = "$route/{$idBarang}"
+}
+
 object DestinasiUpdate: AlamatNavigasi {
     override val route = "update"
-    const val idSuplier = "idBarang"
+    const val idBarang = "idBarang"
     val routeWithArg = "$route/{$idBarang}"
 }
