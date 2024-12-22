@@ -4,6 +4,9 @@ Halaman Home
 Halaman Input Barang
 ![inputbarang](https://github.com/user-attachments/assets/7daab6c4-8978-4287-9a19-9ed24b9726a8)
 
+Dropdown Supplier
+![dropdown](https://github.com/user-attachments/assets/a8fa4922-c099-4af9-b05c-c51665719017)
+
 Validasi Jika data Kosong (barang)
 ![Validasi Insert](https://github.com/user-attachments/assets/30d0dc23-2513-4ead-900b-ead38c4f476d)
 
