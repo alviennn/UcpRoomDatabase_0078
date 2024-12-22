@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -40,7 +38,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun InsertBrgView(
-    onBack: ()-> Unit,
+    onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BarangViewModel = viewModel(factory = PenyediaTokoViewModel.Factory)
@@ -57,19 +55,20 @@ fun InsertBrgView(
             }
         }
     }
+
     Scaffold(
-        Modifier, snackbarHost = {SnackbarHost(hostState = snackbarHostState)}
-    ) { padding ->
-        Column (
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { it
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(padding)
-                .padding(16.dp)
+                .fillMaxSize()
+                .padding(bottom = 120.dp)
         ) {
             TopAppBar(
                 onBack = onBack,
                 showBackButton = true,
-                judul = "Tambah Barang"
+                judul = "Tambah Barang",
             )
             InsertBodyBrg(
                 uiState = uiState,
