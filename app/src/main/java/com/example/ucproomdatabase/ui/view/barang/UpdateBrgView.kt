@@ -1,7 +1,7 @@
 package com.example.ucproomdatabase.ui.view.barang
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -50,17 +50,16 @@ fun UpdateBrgView(
     Scaffold (
         modifier = modifier,
         snackbarHost = {SnackbarHost(hostState = snackbarHostState)},
-    ) { padding ->
+    ) { it
         Column (
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
+                .fillMaxWidth()
+                .padding(bottom = 130.dp)
         ){
             TopAppBar(
-                judul = "Edit Barang",
-                showBackButton = true,
                 onBack = onBack,
+                showBackButton = true,
+                judul = "Edit Barang",
             )
             InsertBodyBrg(
                 uiState = BrgUiState,

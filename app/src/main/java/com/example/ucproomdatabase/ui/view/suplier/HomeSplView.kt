@@ -6,19 +6,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -55,12 +58,12 @@ fun HomeSplView(
     Scaffold(
         topBar = {
             Box(
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
+                modifier = Modifier.fillMaxWidth()
             ) {
                 TopAppBar(
-                    judul = "List Barang",
-                    showBackButton = true,
                     onBack = onBack,
+                    showBackButton = true,
+                    judul = "List Supplier",
                 )
             }
         }
@@ -159,61 +162,97 @@ fun cardSpl(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { }
 ) {
+    val lightPurple = Color(0xFFD1C4E9)
+
     Card(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(16.dp)
+            .clip(MaterialTheme.shapes.medium),
+        colors = CardDefaults.cardColors(containerColor = lightPurple)
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
-                Spacer(modifier = modifier.padding(4.dp))
+                Icon(
+                    imageVector = Icons.Filled.Person,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = spl.namasuplier,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 18.sp,
+                    modifier = Modifier.weight(1f)
                 )
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Phone, contentDescription = "")
-                Spacer(modifier = modifier.padding(4.dp))
+                Icon(
+                    imageVector = Icons.Filled.Phone,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = spl.kontak,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.weight(1f)
                 )
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Home, contentDescription = "")
-                Spacer(modifier = modifier.padding(4.dp))
+                Icon(
+                    imageVector = Icons.Filled.Home,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = spl.alamat,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.weight(1f)
                 )
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Info, contentDescription = "")
-                Spacer(modifier = modifier.padding(4.dp))
+                Icon(
+                    imageVector = Icons.Filled.Info,
+                    contentDescription = null,
+                    tint = Color.Gray,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
                 Text(
-                    text = spl.idsuplier,
-                    fontWeight = FontWeight.Bold,
+                    text = "ID: ${spl.idsuplier}",
+                    fontWeight = FontWeight.Light,
                     fontSize = 14.sp,
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.weight(1f)
                 )
             }
         }

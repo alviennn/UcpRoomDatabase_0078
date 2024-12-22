@@ -40,7 +40,7 @@ fun HomeTokoView(
         topBar = {
             TopHomeAppBar(
                 showBackButton = false,
-                onBack = { }
+                onBack = { },
             )
         },
         content = { paddingValues ->

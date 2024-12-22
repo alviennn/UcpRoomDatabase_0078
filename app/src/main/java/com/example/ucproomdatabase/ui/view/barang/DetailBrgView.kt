@@ -51,7 +51,7 @@ fun DetailBrgView(
     Scaffold(
         topBar = {
             Box(
-             modifier = Modifier.fillMaxWidth().padding(16.dp)
+             modifier = Modifier.fillMaxWidth()
             ){
                 TopAppBar(
                     judul = "Detail Barang",
@@ -112,6 +112,7 @@ fun BodyDetailBrg(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+                    .padding(top = 62.dp)
             ) {
                 ItemDetailBrg(
                     barang = detailBrgUiState.detailBrgUiEvent.toBarangEntity(),
