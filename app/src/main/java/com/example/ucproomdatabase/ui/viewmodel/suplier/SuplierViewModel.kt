@@ -10,51 +10,52 @@ import com.example.ucproomdatabase.repository.RepositorySpl
 import kotlinx.coroutines.launch
 
 class SuplierViewModel(private val repositorySup: RepositorySpl) : ViewModel() {
-    var uiState by mutableStateOf(SuplierUiState())
+    var SplUiState by mutableStateOf(SuplierUiState())
 
-    fun updateUiState(suplierEvent: SuplierEvent){
-        uiState = uiState.copy(
+    fun updateUiState(suplierEvent: SuplierEvent) {
+        SplUiState = SplUiState.copy(
             suplierEvent = suplierEvent
         )
     }
 
-    private fun validateFields(): Boolean{
-        val event = uiState.suplierEvent
-        val errorState = FormErrorState(
-            idsuplier = if (event.idsuplier.isNotEmpty()) "Id suplier tidak boleh kosong" else null,
-            namasuplier = if (event.namasuplier.isNotEmpty()) "Nama suplier tidak boleh kosong" else null,
-            kontak = if (event.kontak.isNotEmpty()) "Kontak suplier tidak boleh kosong" else null,
-            alamat = if (event.alamat.isNotEmpty()) "Alamat suplier tidak boleh kosong" else null
+    private fun validateFields(): Boolean {
+        val event = SplUiState.suplierEvent
+        val errorState = FormSplErrorState(
+            idsuplier = if (event.idsuplier.isEmpty()) "Id suplier tidak boleh kosong" else null,
+            namasuplier = if (event.namasuplier.isEmpty()) "Nama suplier tidak boleh kosong" else null,
+            kontak = if (event.kontak.isEmpty()) "Kontak suplier tidak boleh kosong" else null,
+            alamat = if (event.alamat.isEmpty()) "Alamat suplier tidak boleh kosong" else null
         )
-        uiState = uiState.copy(isEntryValid = errorState)
+        SplUiState = SplUiState.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
-    fun saveData(){
-        val currentEvent = uiState.suplierEvent
 
-        if (validateFields()){
+    fun saveData() {
+        val currentEvent = SplUiState.suplierEvent
+
+        if (validateFields()) {
             viewModelScope.launch {
                 try {
                     repositorySup.insertSuplier(currentEvent.toSuplierEntity())
-                    uiState = uiState.copy(
+                    SplUiState = SplUiState.copy(
                         snackbarMessage = "Data Berhasil Disimpan",
                         suplierEvent = SuplierEvent(),
-                        isEntryValid = FormErrorState()
+                        isEntryValid = FormSplErrorState()
                     )
-                }catch (e: Exception){
-                    uiState = uiState.copy(
+                } catch (e: Exception) {
+                    SplUiState = SplUiState.copy(
                         snackbarMessage = "Data Gagal Disimpan"
                     )
                 }
             }
-        }else {
-            uiState = uiState.copy(
+        } else {
+            SplUiState = SplUiState.copy(
                 snackbarMessage = "Input tidak valid. Periksa kembali data Anda"
             )
         }
     }
-    fun resetSnackbarMessage(){
-        uiState = uiState.copy(
+    fun resetSnackbarMessage() {
+        SplUiState = SplUiState.copy(
             snackbarMessage = null
         )
     }
@@ -62,18 +63,18 @@ class SuplierViewModel(private val repositorySup: RepositorySpl) : ViewModel() {
 
 data class SuplierUiState(
     val suplierEvent: SuplierEvent = SuplierEvent(),
-    val isEntryValid: FormErrorState = FormErrorState(),
+    val isEntryValid: FormSplErrorState = FormSplErrorState(),
     val snackbarMessage: String? = null
 )
 
-data class FormErrorState(
+data class FormSplErrorState(
     val idsuplier: String? = null,
     val namasuplier: String? = null,
     val kontak: String? = null,
     val alamat: String? = null
 ){
     fun isValid(): Boolean{
-        return idsuplier != null && namasuplier != null && kontak != null && alamat != null
+        return idsuplier == null && namasuplier == null && kontak == null && alamat == null
     }
 }
 
